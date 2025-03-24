@@ -1,0 +1,13 @@
+{
+	"id": "RuinaDecks",
+	"name": "Ruina Decks",
+	"display_name": "Ruina Decks",
+	"author": ["someone23832"],
+	"description": "Adds some decks loosely based on Library of Ruina and taking a little bit of inspiration from Lobotomy Corporation's mechanics, sometimes.",
+	"prefix": "ruina",
+	"main_file": "RuinaDecks.lua",
+	"priority": 0,
+	"badge_colour": "85d6c7",
+	"badge_text_colour": "FFFFFF",
+	"version": "0.2"
+}
