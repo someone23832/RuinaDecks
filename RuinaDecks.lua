@@ -6,6 +6,12 @@ SMODS.Atlas {
     py = 95
 }
 
+
+SMODS.Sound {
+    key = 'burn',
+    path = 'burn_book.ogg'
+}
+
 SMODS.Sound {
     key = 'snap',
     path = 'finger-snap.ogg'
@@ -30,20 +36,45 @@ SMODS.Back {
     apply = function(self)
     end,
 }
---[[
+
 SMODS.Back {
     key = 'malkuth',
     loc_txt = {
         name = 'Book of Malkuth',
-        text = { '???'
+        text = { 'After defeating each',
+            '{C:attention}Boss Blind{}, gain',
+            'an {C:attention,T:c_immolate}Eternal Immolate',
+            "{C:inactive,s:0.8}(Can't be sold or destroyed)",
+            'Earn no {C:attention}Interest'
         }
     },
     atlas = 'Decks',
     pos = { x = 1, y = 0 },
     unlocked = true,
     discovered = true,
+    config = {no_interest = true},
+    calculate = function(self, back, context)
+        if context.end_of_round and not context.individual and not context.repetition then
+            if G.GAME.blind.boss and context.game_over ~= true then
+                G.E_MANAGER:add_event(Event({
+                    blockable = true,
+                    blocking = true,
+                    trigger = "after",
+                    delay = 0,
+                    func = function()
+                        local card = create_card('Spectral', G.deck, nil, nil, nil, nil, 'c_immolate')
+                        card.ability.eternal = true
+                        card:add_to_deck()
+                        G.consumeables:emplace(card)
+                        play_sound('ruina_burn', 1, 1.5)
+                        return true
+                    end
+                }))
+            end
+        end
+    end
 }
-
+--[[
 SMODS.Back {
     key = 'yesod',
     loc_txt = {
@@ -155,7 +186,7 @@ SMODS.Back {
     key = 'tipherethv2',
     loc_txt = {
         name = 'Book of Tiphereth, ver. 2',
-        text = { 
+        text = {
             'When a scored hand contains',
             'all 4 suits and no {C:attention,T:m_wild}Wild Cards,',
             'turn all unenhanced scored',
@@ -294,8 +325,10 @@ SMODS.Back {
     pos = { x = 1, y = 2 },
     unlocked = true,
     discovered = true,
-    calculate = function(self, card, context)
+    config = { booster_size = 1, booster_choose = 1 },
+    calculate = function(self, back, context)
         if context.open_booster then
+            context.card.ability.extra = context.card.ability.extra + back.effect.config.booster_size
             G.E_MANAGER:add_event(Event({
                 trigger = 'after',
                 delay = 0,
@@ -303,7 +336,7 @@ SMODS.Back {
                 blocking = false,
                 func = function()
                     if G.pack_cards and G.pack_cards.cards and G.pack_cards.cards[1] and (G.pack_cards.VT.y < G.ROOM.T.h) then
-                        G.GAME.pack_choices = G.GAME.pack_choices + 1
+                        G.GAME.pack_choices = G.GAME.pack_choices + back.effect.config.booster_choose
                         if G.GAME.pack_choices > #G.pack_cards.cards then
                             G.GAME.pack_choices = #G.pack_cards.cards
                         end

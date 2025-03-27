@@ -20,19 +20,6 @@ end
 """
 match_indent = true
 
-# Binah
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "local _size = self.ability.extra"
-position = "after"
-payload = """
-if G.GAME.selected_back.name == "b_ruina_binah" then
-    _size = _size + 1
-end
-"""
-match_indent = true
-
 
 # Hokma
 [[patches]]

@@ -5,7 +5,7 @@ Now has most something for every deck except Malkuth and Yesod, mostly Library o
  All of this is still open to suggestions, changes, and balancing.
  Italics are unimplemented ideas, do feel free to suggest ideas for them.
 - **Keter:** Start with Reroll Surplus, Director's Cut, and Hone
-- **Malkuth:** *Haven't figured out an idea yet*
+- **Malkuth:** After defeating each Boss Blind, gain an Eternal Immolate. Earn no Interest.
 - **Yesod:** *Haven't figured out an idea yet*
 - **Netzach:** +1 hand size for every discarded Face Card until a hand is scored, -1 hand size
 - **Hod:** Jokers give +0 mult, increases +1 each round
